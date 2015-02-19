@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+	</settings>
+
+	<plugins>
+		<plugin interceptor="org.xllapp.mybatis.interceptor.PaginationInterceptor" />
+		<plugin
+			interceptor="org.xllapp.mybatis.interceptor.PaginationResultSetInterceptor" />
+	</plugins>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource
+				type="org.xllapp.mybatis.test.support.DruidDataSourceFactory">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8" />
+				<property name="username" value="root" />
+				<property name="password" value="123456" />
+				<property name="filters" value="slf4j" />
+				
+				<!-- 读写超时:10秒 -->
+				<!-- 连接超时:3秒 -->
+				<property name="connectionProperties" value="socketTimeout=10000;connectTimeout=3000" />
+				<!-- Statement执行超时时间,单位:秒 -->
+				<property name="queryTimeout" value="5" />
+				
+				<!-- 连接有效性检查配置 -->
+				<property name="testWhileIdle" value="true" />
+				<property name="testOnBorrow" value="false" />
+				<property name="testOnReturn" value="false" />
+				<property name="validationQuery" value="select 'x'" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="DemoMapper.xml" />
+	</mappers>
+
+</configuration>
