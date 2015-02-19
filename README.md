@@ -1,1 +1,1 @@
-# xllapp-mybatis
+Mybatis扩展,提供透明的物理分页功能(当前支持mysql和oracle)等。  
